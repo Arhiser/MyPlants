@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/add_done"
+            android:id="@+id/add_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="left"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageButton
-            android:id="@+id/add_cancel"
+            android:id="@+id/add_done"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"

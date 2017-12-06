@@ -1,6 +1,5 @@
 package com.alia.myplants.ui.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,23 +12,18 @@ import com.alia.myplants.R;
 import com.alia.myplants.model.Plant;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by Alyona on 04.12.2017.
  */
 
-public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantHolder> {
-    private Context mContext;
-    private final List<Plant> mPlants;
-
-    public PlantAdapter(Context context) {
-        mContext = context;
-        mPlants = new ArrayList<>();
+public class PlantAdapter extends RealmRecyclerViewAdapter<Plant, PlantAdapter.PlantHolder> {
+    public PlantAdapter(OrderedRealmCollection<Plant> data) {
+        super(data, true);
     }
 
     @Override
@@ -41,18 +35,9 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantHolder>
 
     @Override
     public void onBindViewHolder(PlantHolder holder, int position) {
-        Plant plant = mPlants.get(position);
+        Plant plant = getItem(position);
         holder.bind(plant);
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return mPlants.size();
-    }
-    public void changeDataSet(List<Plant> plants){
-        mPlants.addAll(plants);
-        notifyDataSetChanged();
     }
 
     class PlantHolder extends RecyclerView.ViewHolder {
@@ -70,12 +55,10 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.PlantHolder>
 
         public void bind(@NonNull Plant plant) {
             nameView.setText(plant.getName());
-            waterView.setText(plant.getWater());
+            waterView.setText(String.valueOf(plant.getWater()));
             Picasso.with(imageView.getContext())
                     .load(R.drawable.flowers_1x)
                     .into(imageView);
-
-
         }
     }
 

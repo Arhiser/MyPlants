@@ -16,18 +16,16 @@ import com.alia.myplants.ui.adapter.PlantAdapter;
 import com.alia.myplants.R;
 import com.alia.myplants.model.Plant;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 import static android.support.v7.app.ActionBar.DISPLAY_SHOW_TITLE;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddPlantDialog.ChangeRealmDataListener {
     private static final String TAG = "MainActivity";
     private PlantAdapter mAdapter;
-
+    private Realm realm;
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -45,17 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayOptions(0, DISPLAY_SHOW_TITLE);
         getSupportActionBar().setLogo(R.drawable.logo);
-        List<Plant> plants = new ArrayList<>();
-        for (int i = 0; i < 13; i++) {
-            Plant plant = new Plant(i + 100, "Гриша", "Low");
-            plants.add(plant);
-        }
+        realm = Realm.getDefaultInstance();
 
         int columns = getResources().getInteger(R.integer.columns_count);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, columns));
-        mAdapter = new PlantAdapter(this);
+        mAdapter = new PlantAdapter(realm.where(Plant.class).findAll());
         mRecyclerView.setAdapter(mAdapter);
-        mAdapter.changeDataSet(plants);
     }
 
     @Override
@@ -84,4 +77,16 @@ public class MainActivity extends AppCompatActivity {
         dialog.show(fragmentManager, "dialog");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+    @Override
+    public void onAddPlant(Plant plant) {
+        realm.beginTransaction();
+        realm.copyToRealm(plant);
+        realm.commitTransaction();
+    }
 }

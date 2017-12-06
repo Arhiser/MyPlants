@@ -1,25 +1,43 @@
 package com.alia.myplants.model;
 
+import java.util.UUID;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.Required;
+
 /**
  * Created by Alyona on 04.12.2017.
  */
 
-public class Plant {
-    private int mId;
+public class Plant extends RealmObject {
+    @PrimaryKey
+    @Required
+    private String mId;
     private String mName;
-    private String mWater;
+    private String mImagePath;
+    private int mWater;
+    private int mFertilizer;
+    private String mNotes;
 
-    public Plant(int id, String name, String water) {
-        mId = id;
-        mName = name;
-        mWater = water;
+    public Plant() {
+
     }
 
-    public int getId() {
+    public Plant(String name, String imagePath, int water, int fertilizer, String notes) {
+        mId = UUID.randomUUID().toString();
+        mName = name;
+        mImagePath = imagePath;
+        mWater = water;
+        mFertilizer = fertilizer;
+        mNotes = notes;
+    }
+
+    public String getId() {
         return mId;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         mId = id;
     }
 
@@ -31,11 +49,35 @@ public class Plant {
         mName = name;
     }
 
-    public String getWater() {
+    public String getImagePath() {
+        return mImagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        mImagePath = imagePath;
+    }
+
+    public int getWater() {
         return mWater;
     }
 
-    public void setWater(String water) {
+    public void setWater(int water) {
         mWater = water;
+    }
+
+    public int getFertilizer() {
+        return mFertilizer;
+    }
+
+    public void setFertilizer(int fertilizer) {
+        mFertilizer = fertilizer;
+    }
+
+    public String getNotes() {
+        return mNotes;
+    }
+
+    public void setNotes(String notes) {
+        mNotes = notes;
     }
 }
