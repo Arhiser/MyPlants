@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="salad_green">#e8fa7a</color>
+    <color name="dark_salad_green">#cde962</color>
+    <color name="dark_green">#009640</color>
+    <color name="dark_gray">#9f9d8f</color>
+    <color name="gray">#d5d2cf</color>
+    <color name="dark_ground_gray">#62545c</color>
+    <color name="ashy_pink">#d4a3bf</color>
+    <color name="white">#ffffff</color>
+</resources>

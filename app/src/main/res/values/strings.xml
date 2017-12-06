@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">My Plants</string>
+
+    <string name="empty_message">You haven\'t plants yet :(\n Click + to add one </string>
+
+    <string name="new_plant">New Plant</string>
+    <string name="search_plant">Search Plant</string>
+
+    <string name="plant_name">Name</string>
+    <string name="plant_water">Watering frequency</string>
+    <string-array name="water_days">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>3 days</item>
+        <item>4 days</item>
+        <item>5 days</item>
+        <item>6 days</item>
+        <item>7 days</item>
+    </string-array>
+    <string name="optional_items">Optional</string>
+    <string name="plant_fertilizer">Fertilizer frequency</string>
+    <string-array name="fertilizer_days">
+        <item>1 day</item>
+        <item>2 days</item>
+        <item>3 days</item>
+        <item>4 days</item>
+        <item>5 days</item>
+        <item>6 days</item>
+        <item>7 days</item>
+    </string-array>
+    <string name="plant_notes">Additional Information</string>
+    <string name="plant_image">plantImage</string>
+</resources>
