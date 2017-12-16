@@ -1,5 +1,6 @@
 package com.alia.myplants.ui.activity;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.alia.myplants.ui.fragment.AddPlantDialog;
@@ -19,42 +21,54 @@ import com.alia.myplants.model.Plant;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-
-import static android.support.v7.app.ActionBar.DISPLAY_SHOW_TITLE;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements AddPlantDialog.ChangeRealmDataListener {
     private static final String TAG = "MainActivity";
-    private PlantAdapter mAdapter;
+    private static final String DIALOG_TAG = "addDialog";
+    public static final String EXTRA_PLANT_ID = "MainActivity.plant.id";
+
+    private PlantAdapter adapter;
     private Realm realm;
     @BindView(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
 
     @BindView(R.id.empty)
-    TextView mEmptyView;
+    TextView emptyView;
 
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayOptions(0, DISPLAY_SHOW_TITLE);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setLogo(R.drawable.logo);
+
         realm = Realm.getDefaultInstance();
 
         int columns = getResources().getInteger(R.integer.columns_count);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, columns));
-        mAdapter = new PlantAdapter(realm.where(Plant.class).findAll());
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
+
+        RealmResults<Plant> plantsList = realm.where(Plant.class).findAll();
+
+        if (plantsList.size() == 0) {
+            showEmptyView();
+        } else {
+            showPlants();
+            adapter = new PlantAdapter(plantsList, plant -> createIntent(plant));
+            recyclerView.setAdapter(adapter);
+        }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.app_bar_menu, menu);
+        inflater.inflate(R.menu.bar_main_menu, menu);
         return true;
     }
 
@@ -71,12 +85,6 @@ public class MainActivity extends AppCompatActivity implements AddPlantDialog.Ch
         }
     }
 
-    private void showAddDialog() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        AddPlantDialog dialog = AddPlantDialog.newInstance();
-        dialog.show(fragmentManager, "dialog");
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -89,4 +97,28 @@ public class MainActivity extends AppCompatActivity implements AddPlantDialog.Ch
         realm.copyToRealm(plant);
         realm.commitTransaction();
     }
+
+    private void createIntent(Plant plant) {
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra(EXTRA_PLANT_ID, plant.getId());
+        startActivity(intent);
+    }
+
+    private void showEmptyView() {
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+    }
+
+    private void showPlants() {
+        recyclerView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    private void showAddDialog() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        AddPlantDialog dialog = AddPlantDialog.newInstance();
+        dialog.show(fragmentManager, DIALOG_TAG);
+
+    }
+
 }

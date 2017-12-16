@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alia.myplants.R;
+import com.alia.myplants.utils.CropSquareTransformation;
 import com.alia.myplants.model.Plant;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +23,15 @@ import io.realm.RealmRecyclerViewAdapter;
  */
 
 public class PlantAdapter extends RealmRecyclerViewAdapter<Plant, PlantAdapter.PlantHolder> {
-    public PlantAdapter(OrderedRealmCollection<Plant> data) {
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Plant plant);
+    }
+
+    public PlantAdapter(OrderedRealmCollection<Plant> data, OnItemClickListener listener) {
         super(data, true);
+        this.listener = listener;
     }
 
     @Override
@@ -53,11 +61,15 @@ public class PlantAdapter extends RealmRecyclerViewAdapter<Plant, PlantAdapter.P
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(@NonNull Plant plant) {
+        public void bind(@NonNull final Plant plant) {
+            itemView.setOnClickListener(v -> listener.onItemClick(plant));
             nameView.setText(plant.getName());
             waterView.setText(String.valueOf(plant.getWater()));
+
             Picasso.with(imageView.getContext())
-                    .load(R.drawable.flowers_1x)
+                    .load("content://" + "com.alia.myplants.fileprovider/images/" + plant.getImageName())
+                    .transform(new CropSquareTransformation())
+                    .placeholder(R.drawable.ic_placeholder)
                     .into(imageView);
         }
     }

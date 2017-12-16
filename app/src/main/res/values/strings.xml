@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">My Plants</string>
+    <string name="authority">com.alia.myplants.fileprovider</string>
 
     <string name="empty_message">You haven\'t plants yet :(\n Click + to add one </string>
 
     <string name="new_plant">New Plant</string>
     <string name="search_plant">Search Plant</string>
+    <string name="delete_plant">Delete Plant</string>
+    <string name="edit_plant">Edit Plant</string>
 
     <string name="plant_name">Name</string>
     <string name="plant_water">Watering frequency</string>
@@ -30,4 +33,14 @@
     </string-array>
     <string name="plant_notes">Additional Information</string>
     <string name="plant_image">plantImage</string>
+
+    <string name="notes_view">Notes</string>
+    <string name="next_watering">Water in %1$d days</string>
+    <string name="next_fertilizing">Fertilize on %1$s, %2$d</string>
+
+    <string name="request_storage">External storage access is required to save images of your plants.</string>
+    <string name="ok">OK</string>
+    <string name="input_check">You should input name or add photo</string>
+
+
 </resources>

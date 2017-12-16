@@ -43,12 +43,27 @@
 
     </android.support.constraint.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/plant_image"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+    <RelativeLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        android:contentDescription="@string/plant_image"/>
+        >
+
+        <ImageView
+            android:id="@+id/small_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@string/plant_image"/>
+
+        <ImageButton
+            android:id="@+id/add_image_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_circle_add"/>
+    </RelativeLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -71,7 +86,7 @@
         android:text="@string/plant_water"/>
 
     <Spinner
-        android:id="@+id/water_days"
+        android:id="@+id/input_water"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -93,7 +108,7 @@
         android:text="@string/plant_fertilizer"/>
 
     <Spinner
-        android:id="@+id/fertilizer_days"
+        android:id="@+id/input_fertilizer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -107,7 +122,7 @@
         android:layout_margin="5dp">
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/input_notes"
+            android:id="@+id/input_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/plant_notes"

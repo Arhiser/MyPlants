@@ -13,71 +13,73 @@ import io.realm.annotations.Required;
 public class Plant extends RealmObject {
     @PrimaryKey
     @Required
-    private String mId;
-    private String mName;
-    private String mImagePath;
-    private int mWater;
-    private int mFertilizer;
-    private String mNotes;
+    private String id;
+    private String name;
+    private String imageName;
+    private Integer water;
+    private Integer fertilizer;
+    private String description;
 
     public Plant() {
+        this(null, null, 0, 0, null);
 
     }
 
-    public Plant(String name, String imagePath, int water, int fertilizer, String notes) {
-        mId = UUID.randomUUID().toString();
-        mName = name;
-        mImagePath = imagePath;
-        mWater = water;
-        mFertilizer = fertilizer;
-        mNotes = notes;
+    public Plant(String name, String imageName, int water, int fertilizer, String description) {
+        id = UUID.randomUUID().toString();
+        this.name = name;
+        this.imageName = imageName;
+        this.water = water;
+        this.fertilizer = fertilizer;
+        this.description = description;
     }
 
     public String getId() {
-        return mId;
+        return id;
     }
 
     public void setId(String id) {
-        mId = id;
+        this.id = id;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public void setName(String name) {
-        mName = name;
+        this.name = name;
     }
 
-    public String getImagePath() {
-        return mImagePath;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImagePath(String imagePath) {
-        mImagePath = imagePath;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public int getWater() {
-        return mWater;
+        return water;
     }
 
     public void setWater(int water) {
-        mWater = water;
+        this.water = water;
     }
 
     public int getFertilizer() {
-        return mFertilizer;
+        return fertilizer;
     }
 
     public void setFertilizer(int fertilizer) {
-        mFertilizer = fertilizer;
+        this.fertilizer = fertilizer;
     }
 
-    public String getNotes() {
-        return mNotes;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotes(String notes) {
-        mNotes = notes;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
 }

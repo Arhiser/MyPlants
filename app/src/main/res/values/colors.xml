@@ -9,4 +9,6 @@
     <color name="dark_ground_gray">#62545c</color>
     <color name="ashy_pink">#d4a3bf</color>
     <color name="white">#ffffff</color>
+    <color name="white_180">#b4ffffff</color>
+
 </resources>
